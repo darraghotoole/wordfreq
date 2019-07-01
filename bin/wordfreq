@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require "wordfreq"
+
+def usage
+  $stderr.puts <<~HERE
+    wordfreq - print the n most frequent words on a wikipedia page"
+
+    usage: wordfreq [page_id] [n]
+  HERE
+
+  exit 1
+end
+
+usage if ARGV.size != 2
+
+unless ARGV[0] =~ /^\d+$/
+  $stderr.puts "ERROR: page_id must be numeric"
+  usage
+end
+
+unless ARGV[1] =~ /^\d+$/
+  $stderr.puts "ERROR: n must be numeric"
+  usage
+end
+
+Wordfreq::Wordfreq.print_word_frequencies(ARGV[0].to_i, ARGV[1].to_i)
